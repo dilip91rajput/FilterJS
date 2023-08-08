@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Table Filter</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" media="all" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+
+    <style>
+        .container {margin: 0 auto; max-width: 800px;width: 100%;margin-top: 50px;}
+        table, th, td {
+            font-family:Arial, Helvetica, sans-serif;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        #table {margin-top: 20px; width: 600px;}
+        #table tr td {vertical-align: middle;text-align: center; padding: 4px 10px;font-size: 14px;}
+        #table tr th {padding: 4px 10px;}
+        table .heading-row th {
+            height: 40px;
+            background: #41b5ff;
+            font-weight: 500;
+            color: #fff;
+        }
+        a#btnSave{cursor: pointer;}
+        a#btnSave i{font-size:22px;color:#41b5ff;}
+        tr:nth-child(odd) {
+            background-color: #f2f2f2      
+        }
+        .checkboxField:before {
+            transition-timing-function: cubic-bezier(.075, .820, .165, 1);
+            border: 2px solid;
+            border-radius: 0;
+            background-color: white;
+            border-color: transparent;
+            box-sizing: border-box;
+            color: #41b5ff;
+            content: close-quote;
+            display: inline-block;
+            height: 12px;
+            outline: 2px solid #41b5ff;
+            transition-duration: .5s;
+            transition-property: background-color, border-color;
+            width: 12px;
+        }
+
+        .checkboxField:checked:before {
+        background-color: #41b5ff;
+        border-color: white;
+        }
+
+        button#downloadBttn, button#uploadBttn, #importAll, #importSelected {
+            -moz-box-shadow: 0px 10px 7px -7px #276873;
+            -webkit-box-shadow: 0px 10px 7px -7px #276873;
+            box-shadow: 0px 10px 7px -7px #276873;
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #599bb3), color-stop(1, #408c99));
+            background: -moz-linear-gradient(top, #41b5ff 5%, #1887be 100%);
+            background: -webkit-linear-gradient(top, #41b5ff 5%, #1887be 100%);
+            background: -o-linear-gradient(top, #41b5ff 5%, #1887be 100%);
+            background: -ms-linear-gradient(top, #41b5ff 5%, #1887be 100%);
+            background: linear-gradient(to bottom, #41b5ff 5%, #1887be 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#599bb3', endColorstr='#408c99',GradientType=0);
+            background-color: #599bb3;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #ffffff;
+            font-weight: bold;
+            padding: 7px 32px;
+            border: none;
+            margin-top: 20px;
+            
+        }
+        .button-left{float: left;}
+        .button-right{float: right;}
+        .collectionBttn, .orderSummary {
+            cursor: pointer;
+            font-weight: normal;
+            line-height: normal;
+            margin: 0 0 1.25rem;
+            position: relative;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+            padding-top: 1rem;
+            padding-right: 2rem;
+            padding-bottom: 1.0625rem;
+            padding-left: 2rem;
+            font-size: 1rem;
+            background-color: #008cba;
+            border-color: #0079a1;
+            color: #fff;
+            -webkit-transition: background-color 300ms ease-out;
+            -moz-transition: background-color 300ms ease-out;
+            transition: background-color 300ms ease-out;
+            padding-top: 1.0625rem;
+            padding-bottom: 1rem;
+            -webkit-appearance: none;
+            border: none;
+            font-weight: normal !important;
+        }
+        .orderSummary {
+            background-color: #e7e7e7;
+            border-color: #dadada;
+            color: #333;
+        }
+        .color-yellow {
+            background-color: yellow;
+        }
+        .right {
+            text-align: right !important;
+        }
+        .left {
+            text-align: left !important;
+        }
+        #collapseIcon{
+            font-size: 14px;
+            cursor: pointer;
+            display: inline-block;
+            background: #ccc;
+            border-radius: 40px;
+            width: 16px;
+            text-align: center;
+            line-height: 16px;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        .right:focus{background-color: yellow;}
+        .column-left{float: left;}
+        .column-right{float: right;}
+        .list-reset {
+            margin: 4px 0 0 0;
+            padding: 0;
+            list-style: none;
+        }
+        .list-inline-block li {
+            display: inline-block;margin-left: 6px;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        .text-secondary {
+            color: #788db4!important;
+        }
+        .badge.badge-circle {
+            border-radius: 100%;
+            width: 23px;
+            height: 23px;
+            font-size: .6875rem;
+            font-weight: 400;
+            line-height: 1.6;
+            padding: 4px 5px;
+            vertical-align: baseline;
+        }
+        .badge.badge-secondary {
+            background-color: #788db4;
+            color: rgba(255,255,255,.85);
+        }
+        .h-10 {
+            height: 2px!important;
+        }
+
+        .w-10 {
+            width: 0px!important;
+        }
+        .m-r-5 {
+            margin-right: 5px!important;
+        }
+        .badge-xs:empty, .badge:empty, .breadcrumb-wrapper {
+            display: inline-block;
+        }
+        .titleText {text-align: right;padding: 0;margin: 0;font-size: 20px;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;}
+        .childRow td input#checkBox{margin-left: 20px;}
+        input#checkBoxall:before {outline: 2px solid #fff;}
+        td.childcheckbox input{margin-left: 22px;}
+        .color-yellow {background-color: yellow;}
+        #table tr td[contenteditable] {background-color: yellow;}
+    </style>
+</head>
+<body>
+    <div class="container">
+    <div class="row">
+        <div class="column-left columns">
+        <button class="collectionBttn">Collection Summary</button>
+        <button class="orderSummary">Order Summary</button>
+        </div>
+
+    </div>
+    <table id='table' style="width:100%;">
+        <!-- HEADING FORMATION -->
+        <thead>
+            <tr id="heading-row" class="heading-row">
+                <th>Select All<input type="checkbox" id="checkBoxall" onclick="checkUncheckAll(this)" name="orderItemChecked" class="checkboxField" value=""></th>
+                <th width="200px">Snacks Name</th>
+                <th>No of Orders</th>
+                <th>Order Quantity</th>
+                <th>Order Price</th>
+                <th>% GST</th>
+                <th>Total Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="outputTable">
+        </tbody>
+    </table>
+        <!-- button to call the user-defined function to download CSV file data -->
+        <div class="button-left">
+            <button id="importAll"> <i class="fa-solid fa-upload fa-fw"></i> Export All </button>
+            <button id="importSelected"> <i class="fa-solid fa-upload fa-fw"></i> Export Selected </button>
+        </div>
+        <div class="button-right">
+            <button id="downloadBttn"> <i class="fa-solid fa-download fa-fw"></i> Download All </button>
+            <button id="uploadBttn"> <i class="fa-solid fa-upload fa-fw"></i> Upload All </button>
+        </div>
+    </div>    
+    <script src="js/filter.table.js"></script>
+</body>
+</html>

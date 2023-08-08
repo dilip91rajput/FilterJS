@@ -1,0 +1,74 @@
+{
+  "snacks_data": [
+    {
+      "id": 1,
+      "expanded": false,
+      "isChecked": false,
+      "name": "Sandwich",
+      "ordernumber": 3,
+      "orederquanity": 7,
+      "orderprice": 280,
+      "totalprice": 2000,
+      "GST": "12%",
+      "children": [
+        {
+          "id": 101,
+          "name": "Cheese Sandwich",
+          "ordernumber": 1,
+          "quanity": 2,
+          "isChecked": false,
+          "orderprice": 100
+        },
+        {
+          "id": 102,
+          "name": "Corn Sandwich",
+          "ordernumber": 1,
+          "quanity": 3,
+          "isChecked": false,
+          "orderprice": 100
+        },
+        {
+          "id": 103,
+          "name": "Veg Sandwich",
+          "ordernumber": 1,
+          "quanity": 2,
+          "isChecked": false,
+          "orderprice": 80
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "expanded": false,
+      "isChecked": false,
+      "name": "Burger",
+      "ordernumber": 1,
+      "orederquanity": 2,
+      "orderprice": 100,
+      "totalprice": 200,
+      "GST": "12%",
+      "children": [
+        {
+          "id": 201,
+          "name": "Cheese burger",
+          "ordernumber": 1,
+          "quanity": 3,
+          "isChecked": false,
+          "orderprice": 100
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "expanded": false,
+      "isChecked": false,
+      "name": "Pizza",
+      "ordernumber": 1,
+      "orederquanity": 2,
+      "orderprice": 100,
+      "totalprice": 200,
+      "GST": "12%",
+      "children": []
+    }
+  ]
+}

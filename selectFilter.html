@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Filter</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+     <style>
+        .container {display:block;margin: 0 auto; max-width: 1020px;width: 100%;margin-top: 50px;}
+        .row {float: left;width: 100%;}
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        #table {margin-top: 20px; width: 600px;}
+        #table tr td {vertical-align: middle;text-align: center; padding: 4px 10px;}
+        #table tr th {padding: 4px 10px;}
+        select#fruitDropdown{width: 150px;padding: 4px;}
+        input#quantity {padding: 4px;}
+        input#priceField{width: 40px;padding: 4px;}
+        .bttncl, .additembttn {background: green;font-weight:bold;cursor:pointer;color: #fff; padding: 6px 10px; border-radius: 4px;border: 1px solid #ffffff;}
+        .addeNewItem {background: green;font-weight:bold;cursor:pointer;color: #fff; padding: 6px 12px; margin-bottom:10px;border-radius: 4px;border: 1px solid #ffffff;}
+        .bttnQuantity button {
+            font-size: 30px;
+            background-color: green;
+            color: honeydew;
+            line-height: 18px;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        /*apply hover effect to button tag*/
+        .leftSection{float: left;    width: 70%;}
+        .bttnQuantity button:hover {
+            background-color: greenyellow;
+            color: grey;
+        }
+        .inputDataField {margin-bottom: 10px;}
+        input#addlist{padding: 3px;width: 80px;}
+        .fruitDiv{float: right;    width: 30%;}
+        .fruitDiv ul {margin: 0;padding: 0;list-style: none;}
+        .list span {
+            padding: 0 10px;
+            text-align: right;
+            position: absolute;
+            right: 69px;
+        }
+        /* [contenteditable] { outline: 1px solid #ccc; } */
+        .fruitDiv ul li{position:relative;margin: 0;padding: 10px; border:1px solid #ccc;text-transform: capitalize;font-weight: bold;}
+        .savePrice_btn {
+                        float: right;    
+                        background: green;
+                        font-weight: bold;
+                        cursor: pointer;
+                        color: #fff;
+                        padding: 3px 10px;
+                        border-radius: 4px;
+                        border: 1px solid #ffffff;
+                        margin-top: -4px;
+                    }
+     </style>
+</head>
+<body>
+    <div class="container">
+    <div class="row">
+    <div class="leftSection"> 
+    <label>Fruit List</label>   
+    <select id="fruitDropdown" name="fruit"></select>
+    <label>Quantity</label>
+    <input type="number" placeholder="1" min="0" max="10" oninput="validity.valid||(value='');" value="1" id="quantity" style="width:40px;">
+    <button class="bttncl" onclick="getOption()"> Add </button>
+    <table id='table'>
+        <!-- HEADING FORMATION -->
+        <thead>
+            <tr>
+                <th>Number</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="outputTable">
+            
+        </tbody>
+    </table>
+    </div>
+    <div class="right-section fruitDiv">
+        <button class="addeNewItem">Add New Item</button>
+        <div class="inputDataField" style="display:none;">
+            <label>Fruit</label>
+           <input type="text" id="addlist">
+           <label>Price</label>
+           <input type="text" id="priceField">
+           <button class="additembttn" onclick="addItem()">Add Item</button>
+        </div>
+        <ul id="fruitDataList"></ul>
+    </div>
+    </div>
+    </div>    
+    <script src="js/selectfilter.js"></script>
+    <script>
+        $(function() {
+            $('input').keyup(function() {
+                this.value = this.value.toLocaleLowerCase();
+            });
+        });
+    </script> 
+</body>
+</html>
